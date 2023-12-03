@@ -103,4 +103,28 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
         return userDtos;
     }
+
+    @Override
+    public List<UserDto> getAllocatedUsers() {
+        List<User> users = userRepository.findAll();
+        List<User> allocatedUsers = users.stream()
+                .filter((user)->user.getTrainingId()>0)
+                .collect(Collectors.toList());
+        List<UserDto> userDtos = allocatedUsers.stream()
+                .map((user)->UserMapper.mapToUserDto(user))
+                .collect(Collectors.toList());
+        return userDtos;
+    }
+
+    @Override
+    public List<UserDto> getNotAllocatedUsers() {
+        List<User> users = userRepository.findAll();
+        List<User> allocatedUsers = users.stream()
+                .filter((user)->user.getTrainingId()<1)
+                .collect(Collectors.toList());
+        List<UserDto> userDtos = allocatedUsers.stream()
+                .map((user)->UserMapper.mapToUserDto(user))
+                .collect(Collectors.toList());
+        return userDtos;
+    }
 }

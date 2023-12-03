@@ -10,7 +10,6 @@ public interface TrainingService {
     public TrainingDto createTraining(TrainingDto trainingDto);
     public List<TrainingDto> getAllTraining();
     public List<TrainingDto> getTrainingListByMentorId(int mentorId);
-    public List<TrainingDto> isMentorAvailableToday(int mentorId);
     public TrainingDto getByTrainingId(int trainingId);
     public void deleteTraining(int trainingId);
     public TrainingDto updateTraining(Training training);

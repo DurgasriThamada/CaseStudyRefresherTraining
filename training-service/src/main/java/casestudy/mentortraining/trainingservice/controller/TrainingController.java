@@ -34,19 +34,6 @@ public class TrainingController {
     }
 
     @Operation(
-            summary = "checking for the availability of mentor",
-            description = "check if any of the training of the mentor are available today"
-    )
-    @ApiResponse(
-            responseCode = "200",
-            description = "Http status 200 success"
-    )
-    @GetMapping("/isMentorAvailable/{id}")
-    public List<TrainingDto> isMentorAvailableToday(@PathVariable("id") int mentorId){
-        return trainingService.isMentorAvailableToday(mentorId);
-    }
-
-    @Operation(
             summary = "create training data for a mentor",
             description = "store training details for a mentor in database"
     )

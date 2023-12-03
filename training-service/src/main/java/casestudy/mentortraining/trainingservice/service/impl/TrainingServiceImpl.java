@@ -60,30 +60,6 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public List<TrainingDto> isMentorAvailableToday(int mentorId) {
-        Optional<MentorDto> mentorDto = Optional.ofNullable(mentorFeignClient.getMentorById(mentorId));
-        if(mentorDto.isEmpty())
-            throw new ResourceDoesNotExistException("Mentor");
-        List<Training> trainings = trainingRepository.findByMentorId(mentorId);
-        LocalDate today = LocalDate.now();
-        List<Training> availableTrainings = trainings.stream()
-                        .filter((training)->today.isEqual(training.getStartingDate()) ||
-                                            today.isEqual(training.getEndingDate()) ||
-                                            (
-                                                    today.isAfter(training.getStartingDate()) &&
-                                                    today.isBefore(training.getEndingDate())
-                                            )
-                        )
-                        .collect(Collectors.toList());
-        if(availableTrainings.isEmpty())
-            return null;
-        List<TrainingDto> availableTrainingDtos = availableTrainings.stream()
-                        .map((training)->TrainingMapper.mapToTrainingDto(training))
-                        .collect(Collectors.toList());
-        return availableTrainingDtos;
-    }
-
-    @Override
     public TrainingDto getByTrainingId(int trainingId) {
         Optional<Training> training = trainingRepository.findById(trainingId);
         if(training.isEmpty())

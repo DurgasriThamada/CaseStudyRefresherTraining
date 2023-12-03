@@ -15,4 +15,6 @@ public interface UserService {
     public UserDto updateUser(UserDto userDto);
     public UserDetailsDto getCompleteUserTrainingDetails(String email);
     public List<UserDto> getAllUsersByTrainingId(int trainingId);
+    public List<UserDto> getAllocatedUsers();
+    public List<UserDto> getNotAllocatedUsers();
 }

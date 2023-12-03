@@ -114,4 +114,9 @@ public class MentorController {
     public MentorDetailsDto getCompleteMentorDetailsWithTrainingsAndUsers(@PathVariable("id") int mentorId){
         return mentorService.getCompleteMentorDetailsWithTrainingsAndUsers(mentorId);
     }
+
+    @GetMapping("/getAllAvailableMentors")
+    public List<MentorDto> getAllAvailableMentors(){
+        return mentorService.getAllAvailableMentors();
+    }
 }

@@ -1,12 +1,11 @@
 package casestudy.mentortraining.adminservice.controller;
 
 import casestudy.mentortraining.adminservice.dto.MentorDetailsDto;
+import casestudy.mentortraining.adminservice.dto.TrainingDetailsDto;
 import casestudy.mentortraining.adminservice.service.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,4 +18,10 @@ public class AdminController {
     public ResponseEntity<List<MentorDetailsDto>> getCompleteMentorDetailsALongWithTrainingsAndItsUsers(){
         return ResponseEntity.ok(adminService.getCompleteMentorDetailsALongWithTrainingsAndItsUsers());
     }
+
+    @PostMapping("/allocateBatchToMentor")
+    public TrainingDetailsDto allocateBatchToMentor(@RequestBody TrainingDetailsDto trainingDetailsDto){
+        return adminService.allocateBatchToMentor(trainingDetailsDto);
+    }
+
 }

@@ -9,7 +9,8 @@ public class MentorMapper {
         return new MentorDto(
                 mentor.getId(),
                 mentor.getName(),
-                mentor.getEmailId()
+                mentor.getEmailId(),
+                mentor.getHoursAvailable()
         );
     }
 
@@ -19,6 +20,7 @@ public class MentorMapper {
         mentor.setId(mentorDto.getId());
         mentor.setName(mentorDto.getName());
         mentor.setEmailId(mentorDto.getEmailId());
+        mentor.setHoursAvailable(mentorDto.getHoursAvailable());
 
         return mentor;
     }

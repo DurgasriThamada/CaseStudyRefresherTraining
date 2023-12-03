@@ -18,4 +18,5 @@ public class MentorDto {
     @NotEmpty(message = "Email(Username) should not be empty")
     @Email(message = "email should be in correct manner. Ex: abc@gmail.com")
     private String emailId;
+    private int available;
 }

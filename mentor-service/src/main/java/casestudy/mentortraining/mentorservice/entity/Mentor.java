@@ -22,4 +22,6 @@ public class Mentor {
     private String emailId;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private int hoursAvailable;
 }

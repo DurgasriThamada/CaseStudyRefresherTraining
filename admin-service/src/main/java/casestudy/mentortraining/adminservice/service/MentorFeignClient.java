@@ -5,6 +5,8 @@ import casestudy.mentortraining.adminservice.dto.MentorDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -15,4 +17,10 @@ public interface MentorFeignClient {
 
     @GetMapping("/api/mentors")
     public List<MentorDto> getAllMentors();
+
+    @PutMapping("/api/mentors/updateMentor")
+    public MentorDto updateMentor(@RequestBody MentorDto mentorDto);
+
+    @GetMapping("/api/mentors/{id}")
+    public MentorDto getMentorById(@PathVariable("id") int mentorId);
 }
