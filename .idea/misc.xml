@@ -13,10 +13,12 @@
         <option value="$PROJECT_DIR$/../../SpringBootMicroservices/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/admin-service/pom.xml" />
+        <option value="$PROJECT_DIR$/batch-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/subscription-service/pom.xml" />
         <option value="$PROJECT_DIR$/../../SpringBootMicroservices/config-server/pom.xml" />
       </set>
     </option>

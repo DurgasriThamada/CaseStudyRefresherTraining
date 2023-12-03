@@ -1,5 +1,6 @@
 package casestudy.mentortraining.mentorservice.controller;
 
+import casestudy.mentortraining.mentorservice.dto.MentorDetailsDto;
 import casestudy.mentortraining.mentorservice.dto.MentorDto;
 import casestudy.mentortraining.mentorservice.entity.Mentor;
 import casestudy.mentortraining.mentorservice.service.MentorService;
@@ -31,7 +32,7 @@ public class MentorController {
             description = "Http status 200 success"
     )
     @GetMapping("/login")
-    public boolean isLoginMentor(@RequestParam("email") String emailId, @RequestParam("password") String password){
+    public MentorDto isLoginMentor(@RequestParam("email") String emailId, @RequestParam("password") String password){
         LOGGER.info(String.format("EMAIL %s  PASSWORD %s",emailId,password));
         return mentorService.loginMentor(emailId,password);
     }
@@ -45,7 +46,7 @@ public class MentorController {
             description = "Http status 200 success"
     )
     @PostMapping("/register")
-    public MentorDto mentorRegister(@RequestBody @Valid Mentor mentor){
+    public MentorDto mentorRegister(@Valid @RequestBody Mentor mentor){
         return mentorService.registerMentor(mentor);
     }
 
@@ -75,14 +76,42 @@ public class MentorController {
         return mentorService.getMentorById(mentorId);
     }
 
+    @Operation(
+            summary = "Update Mentor",
+            description = "updates the mentor in database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http status 200 success"
+    )
     @PutMapping("/updateMentor")
     public MentorDto updateMentor(@RequestBody MentorDto mentorDto){
         return mentorService.updateMentorById(mentorDto);
     }
 
+    @Operation(
+            summary = "Delete Mentor",
+            description = "Delete mentor by id from database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http status 200 success"
+    )
     @DeleteMapping("/deleteMentor/{id}")
     public void deleteMentor(@PathVariable("id") int mentorId){
         mentorService.deleteMentorById(mentorId);
     }
 
+    @Operation(
+            summary = "Mentor Details",
+            description = "get mentor details along with his trainings and it's associated users"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http status 200 success"
+    )
+    @GetMapping("/completeMentorDetails/{id}")
+    public MentorDetailsDto getCompleteMentorDetailsWithTrainingsAndUsers(@PathVariable("id") int mentorId){
+        return mentorService.getCompleteMentorDetailsWithTrainingsAndUsers(mentorId);
+    }
 }

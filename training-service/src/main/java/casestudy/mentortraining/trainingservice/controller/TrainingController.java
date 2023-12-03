@@ -7,6 +7,7 @@ import casestudy.mentortraining.trainingservice.repository.TrainingRepository;
 import casestudy.mentortraining.trainingservice.service.TrainingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Path;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +55,7 @@ public class TrainingController {
             description = "Http status 200 success"
     )
     @PostMapping("/createTraining")
-    public TrainingDto createTraining(@RequestBody TrainingDto trainingDto){
+    public TrainingDto createTraining(@Valid @RequestBody TrainingDto trainingDto){
         return trainingService.createTraining(trainingDto);
     }
 
@@ -87,7 +88,7 @@ public class TrainingController {
     }
 
     @GetMapping("/getTrainingDetails/{id}")
-    public TrainingDetailsDto getCompleteTrainingDetailsAlongWithAssociatedUsers(@PathVariable int trainingId){
+    public TrainingDetailsDto getCompleteTrainingDetailsAlongWithAssociatedUsers(@PathVariable("id") int trainingId){
         return trainingService.getCompleteTrainingDetailsAlongWithAssociatedUsers(trainingId);
     }
 }

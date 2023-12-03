@@ -1,6 +1,6 @@
 package casestudy.mentortraining.mentorservice.service.impl;
 
-import casestudy.mentortraining.mentorservice.dto.MentorDto;
+import casestudy.mentortraining.mentorservice.dto.*;
 import casestudy.mentortraining.mentorservice.entity.Mentor;
 import casestudy.mentortraining.mentorservice.exception.EmailAlreadyExistsException;
 import casestudy.mentortraining.mentorservice.exception.InvalidCredentialsException;
@@ -8,6 +8,7 @@ import casestudy.mentortraining.mentorservice.exception.MentorDoesNotExistExcept
 import casestudy.mentortraining.mentorservice.mapper.MentorMapper;
 import casestudy.mentortraining.mentorservice.repository.MentorRepository;
 import casestudy.mentortraining.mentorservice.service.MentorService;
+import casestudy.mentortraining.mentorservice.service.TrainingFeignClient;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,17 +24,19 @@ public class MentorServiceImpl implements MentorService {
 
     private MentorRepository mentorRepository;
 
+    private TrainingFeignClient trainingFeignClient;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MentorServiceImpl.class);
 
     @Override
-    public boolean loginMentor(String emailId, String password) {
+    public MentorDto loginMentor(String emailId, String password) {
         Optional<Mentor> mentor = Optional.ofNullable(mentorRepository.findByEmailId(emailId));
         if(mentor.isEmpty()) {
             LOGGER.info("THROWING EXCEPTION");
             throw new MentorDoesNotExistException(emailId);
         }
         if(emailId.equals(mentor.get().getEmailId()) && password.equals(mentor.get().getPassword()))
-            return true;
+            return MentorMapper.mapToMentorDto(mentor.get());
         else
             throw new InvalidCredentialsException(emailId);
     }
@@ -79,7 +82,22 @@ public class MentorServiceImpl implements MentorService {
         );
         existingMentor.setEmailId(mentor.getEmailId());
         existingMentor.setName(mentor.getName());
-
+        mentorRepository.save(existingMentor);
         return MentorMapper.mapToMentorDto(existingMentor);
+    }
+
+    @Override
+    public MentorDetailsDto getCompleteMentorDetailsWithTrainingsAndUsers(int mentorId) {
+        Mentor existingMentor = mentorRepository.findById(mentorId).orElseThrow(
+                ()-> new MentorDoesNotExistException(mentorId)
+        );
+        List<TrainingDto> trainingDtoList = trainingFeignClient.getTrainingListByMentorId(mentorId);
+        List<TrainingDetailsDto> trainingDetailsDtos = trainingDtoList.stream()
+                .map((training)-> trainingFeignClient.getCompleteTrainingDetailsAlongWithAssociatedUsers(training.getTrainingId()))
+                .collect(Collectors.toList());
+        List<TrainingUserDto> trainingUserDtos = trainingDetailsDtos.stream()
+                .map((training)->new TrainingUserDto(training.getTrainingDto(),training.getUserDtos()))
+                .collect(Collectors.toList());
+        return new MentorDetailsDto(MentorMapper.mapToMentorDto(existingMentor),trainingUserDtos);
     }
 }

@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public UserDto userRegister(@RequestBody User user){
+    public UserDto userRegister(@Valid @RequestBody User user){
         return userService.registerUser(user);
     }
 
@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @PutMapping("/updateUser")
-    public UserDto updateUser(@RequestBody UserDto userDto){
+    public UserDto updateUser(@Valid @RequestBody UserDto userDto){
         return userService.updateUser(userDto);
     }
 

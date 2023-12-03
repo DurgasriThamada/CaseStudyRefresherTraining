@@ -19,8 +19,8 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(MentorDoesNotExistException.class)
-    public ResponseEntity<ErrorDetails> handleMentorDoesNotExistException(MentorDoesNotExistException exception, WebRequest webRequest){
+    @ExceptionHandler(ResourceDoesNotExistException.class)
+    public ResponseEntity<ErrorDetails> handleMentorDoesNotExistException(ResourceDoesNotExistException exception, WebRequest webRequest){
         ErrorDetails errorDetails= new ErrorDetails(
                 LocalDateTime.now(),
                 exception.getMessage(),

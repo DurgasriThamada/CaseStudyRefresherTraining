@@ -10,6 +10,6 @@ import java.util.List;
 
 @FeignClient(url = "http://localhost:8082", value = "USER-SERVICE")
 public interface UserFeignClient {
-    @GetMapping("/getAllUsersByTrainingId/{id}")
+    @GetMapping("api/users/getAllUsersByTrainingId/{id}")
     public List<UserDto> getAllUsersByTrainingId(@PathVariable("id") int trainingId);
 }

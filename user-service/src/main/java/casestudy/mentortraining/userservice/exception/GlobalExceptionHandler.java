@@ -25,7 +25,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 LocalDateTime.now(),
                 exception.getMessage(),
                 webRequest.getDescription(false),
-                "MENTOR_ALREADY_EXISTS"
+                "USER_ALREADY_EXISTS"
         );
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_ACCEPTABLE);
     }
